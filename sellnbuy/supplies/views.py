@@ -4,4 +4,4 @@ from .models import Supply
 
 def main(request):
     context = {"supplies": Supply.objects.all(), }
-    return render(request, "index.html", context)
+    return render(request, "supplies/index.html", context)

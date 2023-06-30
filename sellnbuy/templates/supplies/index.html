@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="shop">
+    <div class="supplies">
+        {% for supply in supplies %}
+            <div class="supply">
+                {{ supply.name }}
+                {{ supply.price }}
+                {{ supply.desc }}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
