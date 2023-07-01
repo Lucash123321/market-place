@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
 <section class="shop">
     <div class="supplies">
         {% for supply in supplies %}
             <div class="supply">
-                {{ supply.name }}
-                {{ supply.price }}
-                {{ supply.desc }}
+                <div class="supply_picture"><img src="{% static 'img/soon.png' %}" width="200" height="200"></div>
+                <div class="supply_name">{{ supply.name }}</div>
+                <div class="price">{{ supply.price }}</div>
+                <div class="desc">{{ supply.desc }}</div>
             </div>
         {% endfor %}
     </div>

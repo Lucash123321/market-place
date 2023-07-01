@@ -1,10 +1,10 @@
 {% load static %}
-<header>
+<header class="page-header">
     <img src="{% static 'img/soon.png' %}" width="400" height="50">
     <nav>
         <ul class="menu">
             <li><a href="/">Войти</a></li>
-            <li><a href="/">Зарегистрироваться</a></li>
+            <li><a href="{% url 'users:register' %}">Зарегистрироваться</a></li>
         </ul>
     </nav>
 </header>

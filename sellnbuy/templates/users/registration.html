@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="registration">
+    <section class="form-background">
+        <header class="form-header">Регистрация пользователя</header>
+        <form action="#" class="form">
+            <div class="input-box">
+                <label>Логин</label>
+                <input type="text" placeholder="Введите ваш логин">
+            </div>
+            <div class="input-box">
+                <label>Имя</label>
+                <input type="text" placeholder="Введите ваше имя">
+            </div>
+            <div class="input-box">
+                <label>Фамилия</label>
+                <input type="text" placeholder="Введите вашу фамилию">
+            </div>
+            <div class="input-box">
+                <label>Email</label>
+                <input type="text" placeholder="Введите ваш email">
+            </div>
+            <div class="input-box">
+                <label>Номер телефона</label>
+                <input type="text" placeholder="Введите ваш телефонный номер">
+            </div>
+            <div class="input-box">
+                <label>Пароль</label>
+                <input type="text" placeholder="Придумайте пароль">
+            </div>
+            <div class="input-box">
+                <label>Подтвердите пароль</label>
+                <input type="text" placeholder="Введите пароль ещё раз">
+            </div>
+            <button>Создать аккаунт</button>
+        </form>
+    </section>
+</body>
+</html>

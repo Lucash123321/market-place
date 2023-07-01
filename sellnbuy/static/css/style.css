@@ -8,7 +8,13 @@ body{
     font-size: 1rem;
 }
 
-header{
+.form-header{
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.page-header{
     background-color: yellow;
     display: flex;
     align-items: center;
@@ -42,7 +48,68 @@ header{
 }
 
 .supply:hover{
-    padding: 10px;
-    border: 1px solid var(--text-color);
+    border: 1px solid black;
     transition: 0.4s;
+}
+
+.supply_picture{
+    text-align: center;
+}
+
+.supply_name{
+    word-wrap: break-word;
+    text-align: center;
+    padding: 3px;
+}
+
+main
+{
+    padding: 3px;
+    padding-top: 5px;
+}
+
+.registration{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 400px;
+}
+
+.form-background{
+    position: relative;
+    max-width: 700 px;
+    width: 100%;
+    background: yellow;
+    padding: 25px;
+    border-radius: 50px;
+}
+
+.form-header{
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-background .form{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form .input-box input{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.form button{
+    height: 55px;
+    width: 100%;
+    font-size: 1 rem;
+    background-color: white;
+    border: none;
+    margin-top: 30px;
 }
