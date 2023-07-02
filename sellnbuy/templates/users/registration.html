@@ -6,39 +6,30 @@
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="registration">
+<body class="form-page">
     <section class="form-background">
         <header class="form-header">Регистрация пользователя</header>
-        <form action="#" class="form">
+        <form method="POST" class="form">
+            {% csrf_token %}
+            {% for field in form %}
             <div class="input-box">
-                <label>Логин</label>
-                <input type="text" placeholder="Введите ваш логин">
+                <label>{{ field.label_tag }}</label>
+                <div>{{ field }}</div>
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <div class="input-box">
-                <label>Имя</label>
-                <input type="text" placeholder="Введите ваше имя">
-            </div>
-            <div class="input-box">
-                <label>Фамилия</label>
-                <input type="text" placeholder="Введите вашу фамилию">
-            </div>
-            <div class="input-box">
-                <label>Email</label>
-                <input type="text" placeholder="Введите ваш email">
-            </div>
-            <div class="input-box">
-                <label>Номер телефона</label>
-                <input type="text" placeholder="Введите ваш телефонный номер">
-            </div>
-            <div class="input-box">
-                <label>Пароль</label>
-                <input type="text" placeholder="Придумайте пароль">
-            </div>
-            <div class="input-box">
-                <label>Подтвердите пароль</label>
-                <input type="text" placeholder="Введите пароль ещё раз">
-            </div>
-            <button>Создать аккаунт</button>
+            {% endfor %}
+            <section class="non-field-errors">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </section>
+            <button type="submit">Создать аккаунт</button>
         </form>
     </section>
 </body>

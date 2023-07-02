@@ -68,12 +68,13 @@ main
     padding-top: 5px;
 }
 
-.registration{
+.form-page{
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 400px;
+    min-width: 400px;
 }
 
 .form-background{
@@ -112,4 +113,12 @@ main
     background-color: white;
     border: none;
     margin-top: 30px;
+}
+
+.form-error{
+    color: red;
+}
+
+.non-field-errors{
+    margin-top: 10px;
 }
