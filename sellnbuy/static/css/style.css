@@ -97,7 +97,7 @@ main
     margin-top: 20px;
 }
 
-.form .input-box input{
+.input-box input{
     position: relative;
     height: 50px;
     width: 100%;
@@ -106,7 +106,7 @@ main
     border-radius: 5px;
 }
 
-.form button{
+.form-button{
     height: 55px;
     width: 100%;
     font-size: 1 rem;

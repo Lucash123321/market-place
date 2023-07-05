@@ -1,6 +1,6 @@
 {% extends "auth-background.html" %}
 {% block content %}
-<header class="form-header">Вход в аккаунт</header>
+<header class="form-header">Регистрация пользователя</header>
 <form method="POST" class="form">
     {% csrf_token %}
     {% for field in form %}
@@ -21,6 +21,6 @@
         {% endfor %}
         {% endif %}
     </section>
-    <button type="submit" class="form-button">Войти в аккаунт</button>
+    <button type="submit" class="form-button">Создать аккаунт</button>
 </form>
 {% endblock %}
