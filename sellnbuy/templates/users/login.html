@@ -21,6 +21,9 @@
         {% endfor %}
         {% endif %}
     </section>
+    <div class="forgot-password">
+        <a href="{% url 'users:password-reset' %}">Забыли пароль?</a>
+    </div>
     <button type="submit" class="form-button">Войти в аккаунт</button>
 </form>
 {% endblock %}
