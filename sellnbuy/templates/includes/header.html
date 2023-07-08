@@ -4,7 +4,7 @@
     <nav>
         <ul class="menu">
             {% if user.is_authenticated %}
-                <li><a href="/">Профиль</a></li>
+                <li><a href="{% url 'supplies:profile'">Профиль</a></li>
                 <li><a href="{% url 'users:logout' %}">Выйти</a></li>
             {% else %}
                 <li><a href="{% url 'users:login' %}">Войти</a></li>
