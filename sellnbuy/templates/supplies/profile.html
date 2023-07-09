@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="user">
+    <section class="user">
         <div class="user-info">
-            <img>
+            <img src="{% static 'img/soon.png' %}" width="200" height="200">
             <ul>
-                <li>{{user.username}}</li>
-                <li></li>
+                <li>{{user.first_name}}</li>
+                <li>{{user.last_name}}</li>
+                <li>{{user.email}}</li>
+                <li>{{user.phone}}</li>
+                <li>{{supplies.count}}</li>
+                <li>
+                    {% if request.user == user %}
+                    <a href="{% url 'supplies:add_supply' %}">Создать объявление</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
-        <div>
+        <hr>
+        <div class="user-supplies">
             {% for supply in supplies %}
-            <div>
-                {{ supply.name }}
-            </div>
+                <div class="supply">
+                    <div class="supply_picture"><img src="{% static 'img/soon.png' %}" width="200" height="200"></div>
+                    <div class="supply_name">{{ supply.name }}</div>
+                    <div class="price">{{ supply.price }}</div>
+                    <div class="desc">{{ supply.desc }}</div>
+                </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 {% endblock %}

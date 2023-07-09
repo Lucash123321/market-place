@@ -1,0 +1,26 @@
+{% extends "auth-background.html" %}
+{% block content %}
+<header class="form-header">Создать объявление</header>
+<form method="POST" class="form">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="input-box">
+        <label>{{ field.label_tag }}</label>
+        <div>{{ field }}</div>
+        {% if field.errors %}
+        {% for error in field.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <section class="non-field-errors">
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </section>
+    <button type="submit" class="form-button">Создать объявление</button>
+</form>
+{% endblock %}

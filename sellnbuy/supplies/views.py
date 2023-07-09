@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Supply
-from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Supply, User
+from .forms import SupplyForm
+from django.contrib.auth.decorators import login_required
 
 
 def main(request):
@@ -12,3 +13,17 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
     context = {"supplies": Supply.objects.filter(user=user.id), "user": user}
     return render(request, "supplies/profile.html", context)
+
+
+@login_required
+def add_supply(request):
+    if request.method == 'POST':
+        form = SupplyForm(request.POST or None)
+        if form.is_valid():
+            supply = form.save(commit=False)
+            supply.user = request.user
+            supply.save()
+            return redirect('supplies:profile', supply.user)
+        return render(request, 'supplies/add_supply.html', {"form": form})
+    form = SupplyForm()
+    return render(request, 'supplies/add_supply.html', {"form": form})
