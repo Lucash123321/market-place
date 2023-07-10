@@ -27,3 +27,9 @@ def add_supply(request):
         return render(request, 'supplies/add_supply.html', {"form": form})
     form = SupplyForm()
     return render(request, 'supplies/add_supply.html', {"form": form})
+
+
+def view_supply(request, id):
+    supply = get_object_or_404(Supply, id=id)
+    context = {"supply": supply}
+    return render(request, "supplies/supply_page.html", context)

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <img src="{% static 'img/soon.png' %}" width="500" height="500">
+    {{ supply.name }}
+    {{ supply.price }}
+    {{ supply.desc }}
+{% endblock %}

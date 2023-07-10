@@ -173,3 +173,15 @@ hr{
 .user-info{
     padding-left: 40px;
 }
+
+.form textarea{
+    resize: none;
+    width: 100%;
+    padding: 2px;
+}
+
+.form-buttons{
+    display: grid;
+    grid-template-columns: 20% 70%;
+    justify-content: space-between;
+}
