@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Supply, User
-from .forms import SupplyForm
+from .models import Supply, User, Comment
+from .forms import SupplyForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -30,6 +30,24 @@ def add_supply(request):
 
 
 def view_supply(request, id):
+    form = CommentForm()
     supply = get_object_or_404(Supply, id=id)
-    context = {"supply": supply}
+    comments = Comment.objects.filter(supply=supply)
+    context = {"supply": supply, "form": form, "comments": comments}
     return render(request, "supplies/supply_page.html", context)
+
+
+@login_required
+def add_comment(request, id):
+    supply = get_object_or_404(Supply, id=id)
+    print('1')
+    if request.method == "POST":
+        print('2')
+        form = CommentForm(request.POST or None)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.supply = supply
+            comment.save()
+    return redirect('supplies:supply', id)
+

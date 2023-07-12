@@ -5,4 +5,23 @@
     {{ supply.name }}
     {{ supply.price }}
     {{ supply.desc }}
+<form method="POST" class="form" action="{% url 'supplies:add_comment' supply.id %}">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="input-box">
+        <label>{{ field.label_tag }}</label>
+        <div>{{ field }}</div>
+        {% if field.errors %}
+        {% for error in field.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="form-button">Опубликовать комментарий</button>
+</form>
+{% for comment in comments %}
+    {{comment.user}}
+    {{comment.text}}
+{% endfor %}
 {% endblock %}
