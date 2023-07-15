@@ -4,25 +4,23 @@
     <section class="user">
         <div class="user-info">
             <img src="{% static 'img/soon.png' %}" width="200" height="200">
-            <ul>
-                <li>Имя:</li>
-                <li>{{user.first_name}}</li>
-                <li>Фамилия:</li>
-                <li>{{user.last_name}}</li>
-                <li>Email:</li>
-                <li>{{user.email}}</li>
-                <li>Номер телефона:</li>
-                <li>{{user.phone}}</li>
-                <li>Количество товаров:</li>
-                <li>{{supplies.count}}</li>
-                <li>
+                <div>Имя:</div>
+                <div>{{user.first_name}}</div>
+                <div>Фамилия:</div>
+                <div>{{user.last_name}}</div>
+                <div>Email:</div>
+                <div>{{user.email}}</div>
+                <div>Номер телефона:</div>
+                <div>{{user.phone}}</div>
+                <div>Количество товаров:</div>
+                <div>{{supplies.count}}</div>
+                <div class="generic-button">
                     {% if request.user == user %}
                     <a href="{% url 'supplies:add_supply' %}">Создать объявление</a> <!-- Доделать -->
                     {% else %}
                     <a href="/">Написать пользователю</a> <!-- Доделать -->
                     {% endif %}
-                </li>
-            </ul>
+                </div>
         </div>
         <hr class="profile-division">
         <div class="user-supplies">

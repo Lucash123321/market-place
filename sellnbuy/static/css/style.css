@@ -117,7 +117,7 @@ body{
     width: 100%;
     outline: none;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .form-button{
@@ -125,8 +125,9 @@ body{
     width: 100%;
     font-size: 1 rem;
     background-color: white;
-    border: none;
     margin-top: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 .form-error{
@@ -155,13 +156,8 @@ body{
     overflow: hidden;
 }
 
-.user-info ul{
-    margin-right: 100px;
-    list-style-type: none;
-}
-
-.user img{
-    padding-top: 10px;
+.user-info img{
+    margin-top: 25px;
 }
 
 .user-supplies{
@@ -173,7 +169,8 @@ body{
 }
 
 .user-info{
-    padding-left: 40px;
+    margin-left: 40px;
+    margin-right: 40px
 }
 
 .form textarea{
@@ -208,6 +205,7 @@ body{
 .comment-input textarea{
     width: 95vw;
     resize: none;
+    border-radius: 10px;
 }
 
 .comment-input{
@@ -220,6 +218,7 @@ body{
     width: 95vw;
     background-color: white;
     height: 50px;
+    border-radius: 10px;
 }
 
 .comment-form{
@@ -229,5 +228,28 @@ body{
 
 .comment{
     margin-left:10px;
+}
+
+.supply-author:hover{
+    color: blue;
+}
+
+.generic-button{
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.generic-button a{
+    padding: 5px;
+    margin-top: 10px;
+    background-color: yellow;
+    border: 1px solid black;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.form textarea{
+    border-radius: 10px;
 }
 
