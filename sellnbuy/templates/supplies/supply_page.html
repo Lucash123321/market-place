@@ -1,27 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <img src="{% static 'img/soon.png' %}" width="500" height="500">
-    {{ supply.name }}
-    {{ supply.price }}
-    {{ supply.desc }}
-<form method="POST" class="form" action="{% url 'supplies:add_comment' supply.id %}">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="input-box">
-        <label>{{ field.label_tag }}</label>
-        <div>{{ field }}</div>
-        {% if field.errors %}
-        {% for error in field.errors %}
-          <div class="form-error">{{ error }}</div>
+    <section class="supply-page">
+        <img src="{% static 'img/soon.png' %}" width="500" height="500">
+        <div>Пользователь:</div>
+        <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
+        <div>Название товара:</div>
+        <div>{{ supply.name }}</div>
+        <div>Цена товара:</div>
+        <div>{{ supply.price }}</div>
+        <div>Описание товара:</div>
+        <div>{{ supply.desc }}</div>
+     </section>
+    <hr>
+    {% if request.user != supply.user %}
+    <form method="POST" class='comment-form' action="{% url 'supplies:add_comment' supply.id %}">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="comment-input">
+            <label>{{ field.label_tag }}</label>
+            <div>{{ field }}</div>
+            {% if field.errors %}
+            {% for error in field.errors %}
+              <div class="form-error">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
         {% endfor %}
+        <button type="submit" class="comment-button">Опубликовать комментарий</button>
+    </form>
+    {% endif %}
+    <div class="comments">
+        {% if comments %}
+        <hr>
         {% endif %}
+        {% for comment in comments %}
+        <div class="comment">
+            <a href="{% url 'supplies:profile' comment.user %}" class="supply-author">{{comment.user}}</a> <!-- заменить supply-author на author -->
+            <div>{{comment.text}}</div>
+        </div>
+        <hr>
+        {% endfor %}
     </div>
-    {% endfor %}
-    <button type="submit" class="form-button">Опубликовать комментарий</button>
-</form>
-{% for comment in comments %}
-    {{comment.user}}
-    {{comment.text}}
-{% endfor %}
 {% endblock %}

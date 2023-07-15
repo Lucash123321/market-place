@@ -5,27 +5,34 @@
         <div class="user-info">
             <img src="{% static 'img/soon.png' %}" width="200" height="200">
             <ul>
+                <li>Имя:</li>
                 <li>{{user.first_name}}</li>
+                <li>Фамилия:</li>
                 <li>{{user.last_name}}</li>
+                <li>Email:</li>
                 <li>{{user.email}}</li>
+                <li>Номер телефона:</li>
                 <li>{{user.phone}}</li>
+                <li>Количество товаров:</li>
                 <li>{{supplies.count}}</li>
                 <li>
                     {% if request.user == user %}
-                    <a href="{% url 'supplies:add_supply' %}">Создать объявление</a>
+                    <a href="{% url 'supplies:add_supply' %}">Создать объявление</a> <!-- Доделать -->
+                    {% else %}
+                    <a href="/">Написать пользователю</a> <!-- Доделать -->
                     {% endif %}
                 </li>
             </ul>
         </div>
-        <hr>
+        <hr class="profile-division">
         <div class="user-supplies">
             {% for supply in supplies %}
-                <div class="supply">
+                <a class="supply" href="{% url 'supplies:supply' supply.id %}">
                     <div class="supply_picture"><img src="{% static 'img/soon.png' %}" width="200" height="200"></div>
                     <div class="supply_name">{{ supply.name }}</div>
                     <div class="price">{{ supply.price }}</div>
                     <div class="desc">{{ supply.desc }}</div>
-                </div>
+                </a>
             {% endfor %}
         </div>
     </section>

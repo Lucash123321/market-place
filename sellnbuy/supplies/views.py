@@ -15,6 +15,14 @@ def profile(request, username):
     return render(request, "supplies/profile.html", context)
 
 
+def view_supply(request, id):
+    form = CommentForm()
+    supply = get_object_or_404(Supply, id=id)
+    comments = Comment.objects.filter(supply=supply)
+    context = {"supply": supply, "form": form, "comments": comments}
+    return render(request, "supplies/supply_page.html", context)
+
+
 @login_required
 def add_supply(request):
     if request.method == 'POST':
@@ -29,25 +37,18 @@ def add_supply(request):
     return render(request, 'supplies/add_supply.html', {"form": form})
 
 
-def view_supply(request, id):
-    form = CommentForm()
-    supply = get_object_or_404(Supply, id=id)
-    comments = Comment.objects.filter(supply=supply)
-    context = {"supply": supply, "form": form, "comments": comments}
-    return render(request, "supplies/supply_page.html", context)
-
-
 @login_required
 def add_comment(request, id):
     supply = get_object_or_404(Supply, id=id)
-    print('1')
     if request.method == "POST":
-        print('2')
         form = CommentForm(request.POST or None)
-        if form.is_valid():
+        if form.is_valid() and request.user != supply.user and not Comment.objects.get(user=request.user):
             comment = form.save(commit=False)
             comment.user = request.user
             comment.supply = supply
             comment.save()
     return redirect('supplies:supply', id)
+
+
+
 
