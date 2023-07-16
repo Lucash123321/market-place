@@ -16,9 +16,9 @@
                 <div>{{supplies.count}}</div>
                 <div class="generic-button">
                     {% if request.user == user %}
-                    <a href="{% url 'supplies:add_supply' %}">Создать объявление</a> <!-- Доделать -->
+                    <a href="{% url 'supplies:add_supply' %}">Создать объявление</a>
                     {% else %}
-                    <a href="/">Написать пользователю</a> <!-- Доделать -->
+                    <a href="{% url 'supplies:chat' user.username %}">Написать пользователю</a>
                     {% endif %}
                 </div>
         </div>

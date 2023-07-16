@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Supply, User, Comment
-from .forms import SupplyForm, CommentForm
+from .models import Supply, User, Comment, Message
+from .forms import SupplyForm, CommentForm, MessageForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -50,5 +50,39 @@ def add_comment(request, id):
     return redirect('supplies:supply', id)
 
 
+@login_required
+def send_message(request, username):
+    to = get_object_or_404(User, username=username)
+    if request.method == "POST":
+        form = MessageForm(request.POST or None)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.user = request.user
+            message.to = to
+            message.save()
+    return redirect('supplies:chat', username)
 
 
+@login_required
+def open_chat(request, username):
+    to = get_object_or_404(User, username=username)
+    sent = list(Message.objects.filter(to=to, user=request.user))
+    received = list(Message.objects.filter(to=request.user, user=to))
+    form = MessageForm
+    i, j = 0, 0
+    messages = []
+    while i < len(sent) or j < len(received):
+        if i < len(sent) and j < len(received) and sent[i].id < received[j].id:
+            messages.append(sent[i])
+            i += 1
+        elif i < len(sent) and j < len(received) and sent[i].id > received[j].id:
+            messages.append(received[j])
+            j += 1
+        elif i < len(sent) and j == len(received):
+            messages += sent[i:]
+            break
+        elif j < len(received) and i == len(sent):
+            messages += received[j:]
+            break
+    context = {'messages': messages, 'form': form, 'username': username}
+    return render(request, 'supplies/chat.html', context)

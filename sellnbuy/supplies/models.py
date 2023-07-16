@@ -16,3 +16,7 @@ class Comment(models.Model):
     text = models.TextField()
 
 
+class Message(models.Model):
+    user = models.ForeignKey(User, related_name="message_author", on_delete=models.CASCADE)
+    to = models.ForeignKey(User, related_name="message_receiver", on_delete=models.CASCADE)
+    text = models.TextField()

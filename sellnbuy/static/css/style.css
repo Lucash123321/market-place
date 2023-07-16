@@ -253,3 +253,37 @@ body{
     border-radius: 10px;
 }
 
+.chat{
+    height: calc(100vh - 301px);
+    overflow-y: scroll;
+}
+
+.message{
+    margin-left: 10px;
+}
+
+.message-form{
+    padding-left: 10px;
+    background-color: yellow;
+    border-top: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.message-form textarea{
+    width: calc(100vw - 20px);
+    resize: none;
+    border-radius: 10px;
+}
+
+.message-button{
+    width: calc(100vw - 20px);
+    background-color: white;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.message-to{
+    text-align: right;
+    margin-right: 10px;
+}

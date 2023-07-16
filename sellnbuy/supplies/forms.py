@@ -1,5 +1,5 @@
 from django import forms
-from .models import Supply, Comment
+from .models import Supply, Comment, Message
 
 
 class SupplyForm(forms.ModelForm):
@@ -21,3 +21,11 @@ class CommentForm(forms.ModelForm):
             'text': 'Введите комментарий'
         }
 
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('text', )
+        labels = {
+            'text': 'Отправить сообщение пользователю',
+        }

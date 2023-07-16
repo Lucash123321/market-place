@@ -6,6 +6,7 @@
     <nav>
         <ul class="menu">
             {% if user.is_authenticated %}
+                <li><a href="/">Мессенджер</a></li>
                 <li><a href="{% url 'supplies:add_supply' %}">Создать объявление</a></li>
                 <li><a href="{% url 'supplies:profile' user.username %}">Профиль</a></li>
                 <li><a href="{% url 'users:logout' %}">Выйти</a></li>
