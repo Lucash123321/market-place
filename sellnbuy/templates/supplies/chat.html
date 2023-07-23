@@ -4,12 +4,18 @@
 {% for message in messages %}
         {% if message.to != request.user %}
             <div class="message">
-                <a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a>
+                <ul class="message-info">
+                    <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
+                    <li>{{ message.time }}</li>
+                </ul>
                 <div>{{ message.text }}</div>
             </div>
         {% else %}
             <div class="message-to">
-                <a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a>
+                <ul class="message-info">
+                    <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
+                    <li>{{ message.time }}</li>
+                </ul>
                 <div>{{ message.text }}</div>
             </div>
         {% endif %}

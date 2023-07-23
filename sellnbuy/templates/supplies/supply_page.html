@@ -12,7 +12,6 @@
         <div>Описание товара:</div>
         <div>{{ supply.desc }}</div>
      </section>
-    <hr>
     {% if request.user != supply.user %}
     <form method="POST" class='comment-form' action="{% url 'supplies:add_comment' supply.id %}">
         {% csrf_token %}

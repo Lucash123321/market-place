@@ -19,4 +19,5 @@ class Comment(models.Model):
 class Message(models.Model):
     user = models.ForeignKey(User, related_name="message_author", on_delete=models.CASCADE)
     to = models.ForeignKey(User, related_name="message_receiver", on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
     text = models.TextField()

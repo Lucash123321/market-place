@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Supply, User, Comment, Message
 from .forms import SupplyForm, CommentForm, MessageForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from . import utils
 
 
 def main(request):
@@ -55,7 +57,7 @@ def send_message(request, username):
     to = get_object_or_404(User, username=username)
     if request.method == "POST":
         form = MessageForm(request.POST or None)
-        if form.is_valid():
+        if form.is_valid() and request.user.username != username:
             message = form.save(commit=False)
             message.user = request.user
             message.to = to
@@ -65,24 +67,23 @@ def send_message(request, username):
 
 @login_required
 def open_chat(request, username):
-    to = get_object_or_404(User, username=username)
-    sent = list(Message.objects.filter(to=to, user=request.user))
-    received = list(Message.objects.filter(to=request.user, user=to))
-    form = MessageForm
-    i, j = 0, 0
-    messages = []
-    while i < len(sent) or j < len(received):
-        if i < len(sent) and j < len(received) and sent[i].id < received[j].id:
-            messages.append(sent[i])
-            i += 1
-        elif i < len(sent) and j < len(received) and sent[i].id > received[j].id:
-            messages.append(received[j])
-            j += 1
-        elif i < len(sent) and j == len(received):
-            messages += sent[i:]
-            break
-        elif j < len(received) and i == len(sent):
-            messages += received[j:]
-            break
-    context = {'messages': messages, 'form': form, 'username': username}
-    return render(request, 'supplies/chat.html', context)
+    if request.user.username != username:
+        to = get_object_or_404(User, username=username)
+        form = MessageForm
+        messages = utils.Chat(request.user, to).list_of_messages()
+        context = {'messages': messages, 'form': form, 'username': username}
+        return render(request, 'supplies/chat.html', context)
+
+
+@login_required
+def messanger(request):
+    users = set(Message.objects.filter(user=request.user).values_list('to__username', flat=True))
+    chat = {}
+    chats = []
+    for user in users:
+        user = User.objects.get(username=user)
+        chat['user'] = user.username
+        chat['last_message'] = utils.Chat(request.user.id, user.id).get_last_message()
+        chats.append(chat)
+    chats.sort(key=lambda chat: chat['last_message'].time.timestamp())
+    return render(request, 'supplies/messanger.html', {'chats': chats})

@@ -287,3 +287,20 @@ body{
     text-align: right;
     margin-right: 10px;
 }
+
+.chats{
+    font-size: 36px;
+    display: grid;
+    grid-template-columns: 10% 70% 20%;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.chats li{
+    display: inline-block;
+}
+
+.message-info li{
+    display: inline;
+}

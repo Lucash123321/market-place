@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for chat in chats %}
+    <a class="supply-author" href="{% url 'supplies:chat' chat.user %}">
+        <div class="chats">
+            <div>{{ chat.user }}</div>
+            <div>{{ chat.last_message.text }}</div>
+            <div>{{ chat.last_message.time }}</div>
+        </div>
+    </a>
+    <hr>
+{% endfor %}
+{% endblock %}
