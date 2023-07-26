@@ -24,7 +24,7 @@
         </div>
         <hr class="profile-division">
         <div class="user-supplies">
-            {% for supply in supplies %}
+            {% for supply in page_obj %}
                 <a class="supply" href="{% url 'supplies:supply' supply.id %}">
                     <div class="supply_picture"><img src="{% static 'img/soon.png' %}" width="200" height="200"></div>
                     <div class="supply_name">{{ supply.name }}</div>
@@ -32,6 +32,9 @@
                     <div class="desc">{{ supply.desc }}</div>
                 </a>
             {% endfor %}
+        </div>
+        <div class="grid-pagination">
+            {% include "includes/paginator.html" %}
         </div>
     </section>
 {% endblock %}

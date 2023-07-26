@@ -8,7 +8,7 @@
                     <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
                     <li>{{ message.time }}</li>
                 </ul>
-                <div>{{ message.text }}</div>
+                <div class="last-message-text">{{ message.text }}</div>
             </div>
         {% else %}
             <div class="message-to">
@@ -16,7 +16,9 @@
                     <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
                     <li>{{ message.time }}</li>
                 </ul>
-                <div>{{ message.text }}</div>
+                <div>
+                    <div>{{ message.text }}</div>
+                </div>
             </div>
         {% endif %}
     <hr>

@@ -7,21 +7,32 @@ from . import utils
 
 
 def main(request):
-    context = {"supplies": Supply.objects.all(), }
+    paginator = Paginator(Supply.objects.all(), 20)
+    page_number = request.GET.get("page") if request.GET.get("page") else 1
+    page_obj = paginator.get_page(page_number)
+    paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
+    context = {"page_obj": page_obj, "paginator_page_numbers": paginator_page_numbers, }
     return render(request, "supplies/index.html", context)
 
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    context = {"supplies": Supply.objects.filter(user=user.id), "user": user}
+    paginator = Paginator(Supply.objects.filter(user=user.id), 20)
+    page_number = request.GET.get("page") if request.GET.get("page") else 1
+    page_obj = paginator.get_page(page_number)
+    paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
+    context = {"page_obj": page_obj, "user": user, "paginator_page_numbers": paginator_page_numbers}
     return render(request, "supplies/profile.html", context)
 
 
 def view_supply(request, id):
     form = CommentForm()
     supply = get_object_or_404(Supply, id=id)
-    comments = Comment.objects.filter(supply=supply)
-    context = {"supply": supply, "form": form, "comments": comments}
+    paginator = Paginator(Comment.objects.filter(supply=supply), 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
+    context = {"supply": supply, "form": form, "page_obj": page_obj, "paginator_page_numbers": paginator_page_numbers}
     return render(request, "supplies/supply_page.html", context)
 
 
@@ -85,5 +96,6 @@ def messanger(request):
         chat['user'] = user.username
         chat['last_message'] = utils.Chat(request.user.id, user.id).get_last_message()
         chats.append(chat)
-    chats.sort(key=lambda chat: chat['last_message'].time.timestamp())
+        chat = {}
+    chats.sort(key=lambda chat: chat['last_message'].time.timestamp(), reverse=True)
     return render(request, 'supplies/messanger.html', {'chats': chats})

@@ -6,6 +6,9 @@
 body{
     line-height: 1.5;
     font-size: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-header{
@@ -144,8 +147,9 @@ body{
 }
 
 .user{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 290px 1px auto;
+    grid-template-rows: auto 100px;
     height: 1fr;
 }
 
@@ -154,6 +158,7 @@ body{
     border: 1px solid black;
     min-height: 100vh;
     overflow: hidden;
+    grid-area: 1/2/3/3;
 }
 
 .user-info img{
@@ -289,7 +294,7 @@ body{
 }
 
 .chats{
-    font-size: 36px;
+    align-items: center;
     display: grid;
     grid-template-columns: 10% 70% 20%;
     justify-content: space-between;
@@ -304,3 +309,51 @@ body{
 .message-info li{
     display: inline;
 }
+
+.last-message-author{
+    font-size: 36px;
+}
+
+.last-message-time{
+    text-align: right;
+}
+
+.last-message-text{
+    word-wrap:break-word;
+}
+
+.pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page-switcher{
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: yellow;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+}
+
+.page-switcher:hover{
+    color: blue;
+}
+
+.footer{
+    padding: 50px;
+    background-color: yellow;
+    border-top: 1px solid black;
+    margin-top: auto;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.grid-pagination{
+    grid-area: 2/3/3/4;
+}
+

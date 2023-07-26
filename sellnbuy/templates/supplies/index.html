@@ -3,7 +3,7 @@
 {% load static %}
 <section class="shop">
     <div class="supplies">
-        {% for supply in supplies %}
+        {% for supply in page_obj %}
             <div class="supply">
                 <a class="supply-author" href="{% url 'supplies:supply' supply.id %}">
                     <div>
@@ -19,6 +19,9 @@
                 <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
             </div>
         {% endfor %}
+    </div>
+    <div class="pagination-grid">
+        {% include "includes/paginator.html" %}
     </div>
 </section>
 {% endblock %}

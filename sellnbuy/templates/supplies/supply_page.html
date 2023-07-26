@@ -33,7 +33,7 @@
         {% if comments %}
         <hr>
         {% endif %}
-        {% for comment in comments %}
+        {% for comment in page_obj %}
         <div class="comment">
             <a href="{% url 'supplies:profile' comment.user %}" class="supply-author">{{comment.user}}</a> <!-- заменить supply-author на author -->
             <div>{{comment.text}}</div>
@@ -41,4 +41,5 @@
         <hr>
         {% endfor %}
     </div>
+    {% include 'includes/paginator.html' %}
 {% endblock %}
