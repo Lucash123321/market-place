@@ -12,7 +12,7 @@
         <div>Описание товара:</div>
         <div>{{ supply.desc }}</div>
      </section>
-    {% if request.user != supply.user %}
+    {% if request.user != supply.user and not is_user_comment_exists %}
     <form method="POST" class='comment-form' action="{% url 'supplies:add_comment' supply.id %}">
         {% csrf_token %}
         {% for field in form %}
@@ -29,17 +29,23 @@
         <button type="submit" class="comment-button">Опубликовать комментарий</button>
     </form>
     {% endif %}
+    {% if page_obj %}
     <div class="comments">
-        {% if comments %}
         <hr>
-        {% endif %}
         {% for comment in page_obj %}
         <div class="comment">
             <a href="{% url 'supplies:profile' comment.user %}" class="supply-author">{{comment.user}}</a> <!-- заменить supply-author на author -->
             <div>{{comment.text}}</div>
+            {% if comment.user.id == request.user.id %}
+            <div class="comment-options">
+                <a class="supply-author" href="{% url 'supplies:change_comment' comment.id %}">Редактировать</a>
+                <a class="supply-author" href="{% url 'supplies:delete_comment' comment.id %}">Удалить</a>
+            </div>
+            {% endif %}
         </div>
         <hr>
         {% endfor %}
     </div>
     {% include 'includes/paginator.html' %}
+    {% endif %}
 {% endblock %}

@@ -24,6 +24,7 @@ body{
     justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
+    border-bottom: 1px solid black;
 }
 
 .page-header a img{
@@ -265,6 +266,7 @@ body{
 
 .message{
     margin-left: 10px;
+    padding-right: 50%;
 }
 
 .message-form{
@@ -272,16 +274,17 @@ body{
     background-color: yellow;
     border-top: 1px solid black;
     padding-bottom: 10px;
+
 }
 
 .message-form textarea{
-    width: calc(100vw - 20px);
+    width: calc(100vw - 40px);
     resize: none;
     border-radius: 10px;
 }
 
 .message-button{
-    width: calc(100vw - 20px);
+    width: calc(100vw - 40px);
     background-color: white;
     height: 30px;
     border-radius: 10px;
@@ -289,8 +292,7 @@ body{
 }
 
 .message-to{
-    text-align: right;
-    margin-right: 10px;
+    padding-left: 50%;
 }
 
 .chats{
@@ -355,5 +357,9 @@ body{
 
 .grid-pagination{
     grid-area: 2/3/3/4;
+}
+
+test{
+    width:
 }
 

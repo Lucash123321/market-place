@@ -3,12 +3,13 @@ from .models import Supply, User, Comment, Message
 from .forms import SupplyForm, CommentForm, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import HttpResponseForbidden
 from . import utils
 
 
 def main(request):
-    paginator = Paginator(Supply.objects.all(), 20)
-    page_number = request.GET.get("page") if request.GET.get("page") else 1
+    paginator = Paginator(Supply.objects.all().order_by('id'), 20)
+    page_number = request.GET.get("page") or 1
     page_obj = paginator.get_page(page_number)
     paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
     context = {"page_obj": page_obj, "paginator_page_numbers": paginator_page_numbers, }
@@ -17,8 +18,8 @@ def main(request):
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    paginator = Paginator(Supply.objects.filter(user=user.id), 20)
-    page_number = request.GET.get("page") if request.GET.get("page") else 1
+    paginator = Paginator(Supply.objects.filter(user=user.id).order_by('id'), 20)
+    page_number = request.GET.get("page") or 1
     page_obj = paginator.get_page(page_number)
     paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
     context = {"page_obj": page_obj, "user": user, "paginator_page_numbers": paginator_page_numbers}
@@ -28,11 +29,18 @@ def profile(request, username):
 def view_supply(request, id):
     form = CommentForm()
     supply = get_object_or_404(Supply, id=id)
-    paginator = Paginator(Comment.objects.filter(supply=supply), 20)
-    page_number = request.GET.get("page")
+    paginator = Paginator(Comment.objects.filter(supply=supply).order_by('-id'), 20)
+    page_number = request.GET.get("page") or 1
     page_obj = paginator.get_page(page_number)
     paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
-    context = {"supply": supply, "form": form, "page_obj": page_obj, "paginator_page_numbers": paginator_page_numbers}
+    is_user_comment_exists = bool(Comment.objects.filter(supply=supply, user=request.user))
+    context = {
+        "supply": supply,
+        "form": form,
+        "page_obj": page_obj,
+        "paginator_page_numbers": paginator_page_numbers,
+        "is_user_comment_exists": is_user_comment_exists,
+    }
     return render(request, "supplies/supply_page.html", context)
 
 
@@ -55,7 +63,8 @@ def add_comment(request, id):
     supply = get_object_or_404(Supply, id=id)
     if request.method == "POST":
         form = CommentForm(request.POST or None)
-        if form.is_valid() and request.user != supply.user and not Comment.objects.get(user=request.user):
+        if form.is_valid() and request.user != supply.user and not Comment.objects.filter(user=request.user,
+                                                                                          supply=supply):
             comment = form.save(commit=False)
             comment.user = request.user
             comment.supply = supply
@@ -99,3 +108,27 @@ def messanger(request):
         chat = {}
     chats.sort(key=lambda chat: chat['last_message'].time.timestamp(), reverse=True)
     return render(request, 'supplies/messanger.html', {'chats': chats})
+
+
+@login_required
+def change_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    if request.user.id == comment.user.id:
+        if request.method == "POST":
+            form = CommentForm(request.POST or None, instance=comment)
+            if form.is_valid():
+                comment.save()
+            return redirect('supplies:supply', comment.supply.id)
+        form = CommentForm()
+        form.fields['text'].label = 'Изменить комментарий'
+        form.fields['text'].initial = comment.text
+        return render(request, 'supplies/change_comment.html', {"form": form})
+    return HttpResponseForbidden()
+
+
+@login_required
+def delete_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    if request.user.id == comment.user.id:
+        Comment.objects.filter(id=id).delete()
+    return redirect('supplies:supply', comment.supply.id)

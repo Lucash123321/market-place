@@ -7,7 +7,7 @@ class Supply(models.Model):
     name = models.CharField(max_length=50)
     price = models.CharField(max_length=20)
     picture = models.ImageField(upload_to="supply/", null=True, blank=True)
-    desc = models.TextField()
+    desc = models.TextField(null=True, blank=True)
 
 
 class Comment(models.Model):
@@ -21,3 +21,4 @@ class Message(models.Model):
     to = models.ForeignKey(User, related_name="message_receiver", on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
+
