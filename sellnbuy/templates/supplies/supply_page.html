@@ -11,6 +11,12 @@
         <div>{{ supply.price }}</div>
         <div>Описание товара:</div>
         <div>{{ supply.desc }}</div>
+        {% if supply.user.id == request.user.id %}
+        <div class="comment-options">
+            <a class="supply-author" href="{% url 'supplies:change_supply' supply.id %}">Редактировать товар</a>
+            <a class="supply-author" href="{% url 'supplies:delete_supply' supply.id %}">Удалить товар</a>
+        </div>
+        {% endif %}
      </section>
     {% if request.user != supply.user and not is_user_comment_exists %}
     <form method="POST" class='comment-form' action="{% url 'supplies:add_comment' supply.id %}">

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 from . import utils
+from django.core.exceptions import PermissionDenied
 
 
 def main(request):
@@ -53,9 +54,9 @@ def add_supply(request):
             supply.user = request.user
             supply.save()
             return redirect('supplies:profile', supply.user)
-        return render(request, 'supplies/add_supply.html', {"form": form})
+        return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
     form = SupplyForm()
-    return render(request, 'supplies/add_supply.html', {"form": form})
+    return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
 
 
 @login_required
@@ -114,16 +115,13 @@ def messanger(request):
 def change_comment(request, id):
     comment = get_object_or_404(Comment, id=id)
     if request.user.id == comment.user.id:
+        form = CommentForm(request.POST or None, instance=comment)
         if request.method == "POST":
-            form = CommentForm(request.POST or None, instance=comment)
             if form.is_valid():
-                comment.save()
+                form.save()
             return redirect('supplies:supply', comment.supply.id)
-        form = CommentForm()
-        form.fields['text'].label = 'Изменить комментарий'
-        form.fields['text'].initial = comment.text
         return render(request, 'supplies/change_comment.html', {"form": form})
-    return HttpResponseForbidden()
+    raise PermissionDenied()
 
 
 @login_required
@@ -132,3 +130,25 @@ def delete_comment(request, id):
     if request.user.id == comment.user.id:
         Comment.objects.filter(id=id).delete()
     return redirect('supplies:supply', comment.supply.id)
+
+
+@login_required
+def change_supply(request, id):
+    supply = get_object_or_404(Supply, id=id)
+    if request.user.id == supply.user.id:
+        form = SupplyForm(request.POST or None, instance=supply)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+            return redirect('supplies:supply', supply.id)
+        return render(request, 'supplies/add_supply.html', {"form": form, 'change': True})
+    raise PermissionDenied()
+
+
+@login_required()
+def delete_supply(request, id):
+    supply = get_object_or_404(Supply, id=id)
+    if request.user.id == supply.user.id:
+        Supply.objects.filter(id=id).delete()
+        return redirect('supplies:profile', supply.user.username)
+    return redirect('supplies:supply', supply.id)
