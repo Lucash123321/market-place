@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load thumbnail %}
 {% block content %}
     <section class="supply-page">
-        {% load thumbnail %}
+        {% if supply.image %}
         {% thumbnail supply.image "500x500" crop="center" upscale=True as im %}
-            <img class="" src="{{im.url}}">
+        <img class="" src="{{ im.url }}">
         {% endthumbnail %}
+        {% else %}
+        <img src="{% static 'img/no-image.jpeg' %}" width="500" height="500">
+        {% endif %}
         <div>Пользователь:</div>
         <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
         <div>Название товара:</div>

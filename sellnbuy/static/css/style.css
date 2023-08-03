@@ -157,7 +157,7 @@ body{
 .profile-division{
     display: absolute;
     border: 1px solid black;
-    min-height: 100vh;
+    min-height: calc(100vh - 200px);
     overflow: hidden;
     grid-area: 1/2/3/3;
 }

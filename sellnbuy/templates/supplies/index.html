@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+{% load thumbnail %}
 <section class="shop">
     <div class="supplies">
         {% for supply in page_obj %}
             <div class="supply">
                 <a class="supply-author" href="{% url 'supplies:supply' supply.id %}">
                     <div>
-                        <div class="supply_picture"><img src="{% static 'img/soon.png' %}" width="200" height="200"></div>
+                        {% if supply.image %}
+                        {% thumbnail supply.image "200x200" crop="center" upscale=True as im %}
+                            <img class="" src="{{ im.url }}">
+                        {% endthumbnail %}
+                        {% else %}
+                        <img src="{% static 'img/no-image.jpeg' %}" width="200" height="200">
+                        {% endif %}
                         <div class="supply_name">{{ supply.name }}</div>
                         <div>Цена товара:</div>
                         <div class="price">{{ supply.price }}</div>
