@@ -8,10 +8,13 @@ class Supply(models.Model):
     price = models.CharField(max_length=20)
     picture = models.ImageField(upload_to="supply/", null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='supplies/', blank=True, null=True)
 
 
 class Comment(models.Model):
+    rating_value = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'))
     user = models.ForeignKey(User, related_name="comment_author", on_delete=models.CASCADE)
+    rating = models.CharField(max_length=1, choices=rating_value)
     supply = models.ForeignKey(Supply, related_name="post_to_comment", on_delete=models.CASCADE)
     text = models.TextField()
 

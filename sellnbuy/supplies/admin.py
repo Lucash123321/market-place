@@ -4,7 +4,7 @@ from .models import Supply, Comment, Message
 
 # Register your models here.
 class SupplyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'price', 'desc')
+    list_display = ('name', 'user', 'price', 'desc', 'image')
 
 
 class CommentAdmin(admin.ModelAdmin):

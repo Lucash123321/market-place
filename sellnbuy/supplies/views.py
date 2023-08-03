@@ -48,12 +48,13 @@ def view_supply(request, id):
 @login_required
 def add_supply(request):
     if request.method == 'POST':
-        form = SupplyForm(request.POST or None)
+        form = SupplyForm(request.POST or None, files=request.FILES or None)
         if form.is_valid():
             supply = form.save(commit=False)
             supply.user = request.user
             supply.save()
             return redirect('supplies:profile', supply.user)
+        print(form.errors)
         return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
     form = SupplyForm()
     return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
@@ -136,7 +137,7 @@ def delete_comment(request, id):
 def change_supply(request, id):
     supply = get_object_or_404(Supply, id=id)
     if request.user.id == supply.user.id:
-        form = SupplyForm(request.POST or None, instance=supply)
+        form = SupplyForm(request.POST or None, files=request.FILES or None, instance=supply)
         if request.method == "POST":
             if form.is_valid():
                 form.save()

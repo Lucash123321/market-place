@@ -363,3 +363,10 @@ test{
     width:
 }
 
+.form #id_image{
+    background-color: white;
+    border-radius: 0px;
+    height: auto;
+    width: auto;
+}
+

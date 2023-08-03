@@ -5,20 +5,22 @@ from .models import Supply, Comment, Message
 class SupplyForm(forms.ModelForm):
     class Meta:
         model = Supply
-        fields = ('name', 'price', 'desc', )
+        fields = ('name', 'price', 'desc', 'image', )
         labels = {
             'name': 'Название товара',
             'price': 'Цена товара',
-            'desc': 'Описание товара'
+            'desc': 'Описание товара',
+            'image': 'Фотография товара',
         }
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('text', )
+        fields = ('rating', 'text', )
         labels = {
-            'text': 'Текст комментария'
+            'rating': 'Ваша оценка',
+            'text': 'Текст комментария',
         }
 
 

@@ -2,7 +2,10 @@
 {% load static %}
 {% block content %}
     <section class="supply-page">
-        <img src="{% static 'img/soon.png' %}" width="500" height="500">
+        {% load thumbnail %}
+        {% thumbnail supply.image "500x500" crop="center" upscale=True as im %}
+            <img class="" src="{{im.url}}">
+        {% endthumbnail %}
         <div>Пользователь:</div>
         <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
         <div>Название товара:</div>
@@ -41,6 +44,8 @@
         {% for comment in page_obj %}
         <div class="comment">
             <a href="{% url 'supplies:profile' comment.user %}" class="supply-author">{{comment.user}}</a> <!-- заменить supply-author на author -->
+            <div>Оценка пользователя: {{comment.rating}}/5</div>
+            <div>Комментарий:</div>
             <div>{{comment.text}}</div>
             {% if comment.user.id == request.user.id %}
             <div class="comment-options">

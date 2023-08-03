@@ -5,7 +5,7 @@
 {% else %}
 <header class="form-header">Создать объявление</header>
 {% endif %}
-<form method="POST" class="form">
+<form method="POST" enctype="multipart/form-data" class="form">
     {% csrf_token %}
     {% for field in form %}
     <div class="input-box">
