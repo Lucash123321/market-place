@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 class Supply(models.Model):
     user = models.ForeignKey(User, related_name="seller", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    price = models.CharField(max_length=20)
-    picture = models.ImageField(upload_to="supply/", null=True, blank=True)
+    price = models.PositiveIntegerField()
     desc = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='supplies/', blank=True, null=True)
 

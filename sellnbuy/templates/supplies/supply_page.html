@@ -18,14 +18,14 @@
         <div>{{ supply.price }}</div>
         <div>Описание товара:</div>
         <div>{{ supply.desc }}</div>
-        {% if supply.user.id == request.user.id %}
+        {% if request.user.is_authenticated and supply.user.id == request.user.id %}
         <div class="comment-options">
             <a class="supply-author" href="{% url 'supplies:change_supply' supply.id %}">Редактировать товар</a>
             <a class="supply-author" href="{% url 'supplies:delete_supply' supply.id %}">Удалить товар</a>
         </div>
         {% endif %}
      </section>
-    {% if request.user != supply.user and not is_user_comment_exists %}
+    {% if request.user.is_authenticated and request.user != supply.user and not is_user_comment_exists %}
     <form method="POST" class='comment-form' action="{% url 'supplies:add_comment' supply.id %}">
         {% csrf_token %}
         {% for field in form %}
@@ -51,7 +51,7 @@
             <div>Оценка пользователя: {{comment.rating}}/5</div>
             <div>Комментарий:</div>
             <div>{{comment.text}}</div>
-            {% if comment.user.id == request.user.id %}
+            {% if request.user.is_authenticated and comment.user.id == request.user.id %}
             <div class="comment-options">
                 <a class="supply-author" href="{% url 'supplies:change_comment' comment.id %}">Редактировать</a>
                 <a class="supply-author" href="{% url 'supplies:delete_comment' comment.id %}">Удалить</a>

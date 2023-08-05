@@ -34,7 +34,10 @@ def view_supply(request, id):
     page_number = request.GET.get("page") or 1
     page_obj = paginator.get_page(page_number)
     paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
-    is_user_comment_exists = bool(Comment.objects.filter(supply=supply, user=request.user))
+    if request.user.is_authenticated:
+        is_user_comment_exists = bool(Comment.objects.filter(supply=supply, user=request.user))
+    else:
+        is_user_comment_exists = False
     context = {
         "supply": supply,
         "form": form,
@@ -54,7 +57,6 @@ def add_supply(request):
             supply.user = request.user
             supply.save()
             return redirect('supplies:profile', supply.user)
-        print(form.errors)
         return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
     form = SupplyForm()
     return render(request, 'supplies/add_supply.html', {"form": form, 'change': False})
@@ -122,7 +124,7 @@ def change_comment(request, id):
                 form.save()
             return redirect('supplies:supply', comment.supply.id)
         return render(request, 'supplies/change_comment.html', {"form": form})
-    raise PermissionDenied()
+    return redirect('supplies:supply', comment.supply.id)
 
 
 @login_required
@@ -143,7 +145,7 @@ def change_supply(request, id):
                 form.save()
             return redirect('supplies:supply', supply.id)
         return render(request, 'supplies/add_supply.html', {"form": form, 'change': True})
-    raise PermissionDenied()
+    return redirect('supplies:supply', supply.id)
 
 
 @login_required()
