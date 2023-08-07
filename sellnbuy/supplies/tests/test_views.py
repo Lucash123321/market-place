@@ -105,13 +105,31 @@ class TestView(TestCase):
     def test_messanger(self):
         response = self.author_client.get(reverse("supplies:messanger"))
         self.assertEqual(len(response.context.get('chats')), 2)
+        self.assertEqual(response.context.get('chats')[0]['user'], 'second_user')
+        self.assertEqual(response.context.get('chats')[1]['user'], 'first_user')
         response = self.second_user_client.get(reverse("supplies:messanger"))
         self.assertEqual(len(response.context.get('chats')), 1)
+        self.assertEqual(response.context.get('chats')[0]['user'], 'author')
         response = self.first_user_client.get(reverse("supplies:messanger"))
         self.assertEqual(len(response.context.get('chats')), 1)
+        self.assertEqual(response.context.get('chats')[0]['user'], 'author')
 
     def test_supply_context(self):
         supply = Supply.objects.get(id=1)
         response = self.first_user_client.get(reverse("supplies:supply", kwargs={"id": 1}))
         self.assertEqual(response.context.get('supply'), supply)
 
+    def test_delete_comment(self):
+        count = Comment.objects.count()
+        self.first_user_client.get(reverse("supplies:delete_comment", kwargs={"id": 1}))
+        self.assertEqual(Comment.objects.count(), count)
+        self.author_client.get(reverse("supplies:delete_comment", kwargs={"id": 1}))
+        self.assertEqual(Comment.objects.count(), count - 1)
+
+    def test_delete_supply(self):
+        count = Supply.objects.count()
+        self.first_user_client.get(reverse("supplies:delete_supply", kwargs={"id": 1}))
+        self.assertEqual(Supply.objects.count(), count)
+        self.author_client.get(reverse("supplies:delete_supply", kwargs={"id": 1}))
+        self.assertEqual(Supply.objects.count(), count - 1)
+        self.assertEqual(Comment.objects.count(), 0)

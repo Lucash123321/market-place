@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from supplies.models import User, Supply, Comment, Message
+from supplies.models import User, Supply, Comment
 from django.urls import reverse
 
 
@@ -34,7 +34,7 @@ class TestUrls(TestCase):
 
         cls.author_access = (
             reverse("supplies:change_comment", kwargs={"id": 1}),
-            reverse("supplies:change_supply", kwargs={"id": 1})
+            reverse("supplies:change_supply", kwargs={"id": 1}),
         )
 
     def setUp(self):
