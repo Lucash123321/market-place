@@ -118,6 +118,7 @@ class TestView(TestCase):
         supply = Supply.objects.get(id=1)
         response = self.first_user_client.get(reverse("supplies:supply", kwargs={"id": 1}))
         self.assertEqual(response.context.get('supply'), supply)
+        self.assertTrue(response.context.get('supply').image)
 
     def test_delete_comment(self):
         count = Comment.objects.count()
