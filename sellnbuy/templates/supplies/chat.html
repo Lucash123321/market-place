@@ -5,7 +5,7 @@
         {% if message.to != request.user %}
             <div class="message">
                 <ul class="message-info">
-                    <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
+                    <li><a class="link" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
                     <li>{{ message.time }}</li>
                 </ul>
                 <div class="last-message-text">{{ message.text }}</div>
@@ -13,7 +13,7 @@
         {% else %}
             <div class="message-to">
                 <ul class="message-info">
-                    <li><a class="supply-author" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
+                    <li><a class="link" href="{% url 'supplies:profile' message.user %}">{{ message.user }}</a></li>
                     <li>{{ message.time }}</li>
                 </ul>
                 <div class="test">

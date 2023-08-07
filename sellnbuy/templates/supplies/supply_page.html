@@ -11,7 +11,7 @@
         <img src="{% static 'img/no-image.jpeg' %}" width="500" height="500">
         {% endif %}
         <div>Пользователь:</div>
-        <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
+        <a class="link" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
         <div>Название товара:</div>
         <div>{{ supply.name }}</div>
         <div>Цена товара:</div>
@@ -19,9 +19,9 @@
         <div>Описание товара:</div>
         <div>{{ supply.desc }}</div>
         {% if request.user.is_authenticated and supply.user.id == request.user.id %}
-        <div class="comment-options">
-            <a class="supply-author" href="{% url 'supplies:change_supply' supply.id %}">Редактировать товар</a>
-            <a class="supply-author" href="{% url 'supplies:delete_supply' supply.id %}">Удалить товар</a>
+        <div class="options">
+            <a class="link" href="{% url 'supplies:change_supply' supply.id %}">Редактировать товар</a>
+            <a class="link" href="{% url 'supplies:delete_supply' supply.id %}">Удалить товар</a>
         </div>
         {% endif %}
      </section>
@@ -47,14 +47,14 @@
         <hr>
         {% for comment in page_obj %}
         <div class="comment">
-            <a href="{% url 'supplies:profile' comment.user %}" class="supply-author">{{comment.user}}</a> <!-- заменить supply-author на author -->
+            <a href="{% url 'supplies:profile' comment.user %}" class="link">{{comment.user}}</a>
             <div>Оценка пользователя: {{comment.rating}}/5</div>
             <div>Комментарий:</div>
             <div>{{comment.text}}</div>
             {% if request.user.is_authenticated and comment.user.id == request.user.id %}
-            <div class="comment-options">
-                <a class="supply-author" href="{% url 'supplies:change_comment' comment.id %}">Редактировать</a>
-                <a class="supply-author" href="{% url 'supplies:delete_comment' comment.id %}">Удалить</a>
+            <div class="options">
+                <a class="link" href="{% url 'supplies:change_comment' comment.id %}">Редактировать</a>
+                <a class="link" href="{% url 'supplies:delete_comment' comment.id %}">Удалить</a>
             </div>
             {% endif %}
         </div>

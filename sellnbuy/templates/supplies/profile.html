@@ -4,7 +4,7 @@
 {% block content %}
     <section class="user">
         <div class="user-info">
-            <img src="{% static 'img/soon.png' %}" width="200" height="200">
+            <img src="{% static 'img/no-image.jpeg' %}" width="200" height="200">
                 <div>Имя:</div>
                 <div>{{user.first_name}}</div>
                 <div>Фамилия:</div>
@@ -14,7 +14,7 @@
                 <div>Номер телефона:</div>
                 <div>{{user.phone}}</div>
                 <div>Количество товаров:</div>
-                <div>{{supplies.count}}</div>
+                <div>{{count}}</div>
                 <div class="generic-button">
                     {% if request.user == user %}
                     <a href="{% url 'supplies:add_supply' %}">Создать объявление</a>

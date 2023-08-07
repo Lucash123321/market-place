@@ -203,7 +203,7 @@ body{
     float:left;
 }
 
-.supply-author{
+.link{
     text-decoration: none;
     color: black;
 }
@@ -236,7 +236,7 @@ body{
     margin-left:10px;
 }
 
-.supply-author:hover{
+.link:hover{
     color: blue;
 }
 

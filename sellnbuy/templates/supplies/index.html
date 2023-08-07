@@ -6,7 +6,7 @@
     <div class="supplies">
         {% for supply in page_obj %}
             <div class="supply">
-                <a class="supply-author" href="{% url 'supplies:supply' supply.id %}">
+                <a class="link" href="{% url 'supplies:supply' supply.id %}">
                     <div>
                         {% if supply.image %}
                         {% thumbnail supply.image "200x200" crop="center" upscale=True as im %}
@@ -23,7 +23,7 @@
                     </div>
                 </a>
                 <div>Продавец:</div>
-                <a class="supply-author" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
+                <a class="link" href="{% url 'supplies:profile' supply.user %}">{{ supply.user }}</a>
             </div>
         {% endfor %}
     </div>

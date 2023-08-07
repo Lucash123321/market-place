@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% for chat in chats %}
-    <a class="supply-author" href="{% url 'supplies:chat' chat.user %}">
+    <a class="link" href="{% url 'supplies:chat' chat.user %}">
         <div class="chats">
             <div class="last-message-author">{{ chat.user }}</div>
             <div>{{ chat.last_message.text|truncatechars:90 }}</div>

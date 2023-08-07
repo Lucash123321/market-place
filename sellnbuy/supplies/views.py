@@ -19,11 +19,13 @@ def main(request):
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    paginator = Paginator(Supply.objects.filter(user=user.id).order_by('id'), 20)
+    user_supplies = Supply.objects.filter(user=user.id).order_by('id')
+    count = user_supplies.count
+    paginator = Paginator(user_supplies, 20)
     page_number = request.GET.get("page") or 1
     page_obj = paginator.get_page(page_number)
     paginator_page_numbers = [i for i in range(int(page_number) - 2, int(page_number) + 3)]
-    context = {"page_obj": page_obj, "user": user, "paginator_page_numbers": paginator_page_numbers}
+    context = {"page_obj": page_obj, "user": user, "paginator_page_numbers": paginator_page_numbers, 'count': count}
     return render(request, "supplies/profile.html", context)
 
 
