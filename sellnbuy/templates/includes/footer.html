@@ -1,5 +1,5 @@
 <div class="footer">
-    <div><a class="link" href="/">Об авторе</a></div>
-    <div><a class="link" href="/">Технологии</a></div>
+    <div><a class="link" href="{% url 'about:author_page' %}">Об авторе</a></div>
+    <div><a class="link" href="{% url 'about:techs' %}">Технологии</a></div>
     <div>Торговая площадка sellNbuy © {% now 'Y' %}, все права защищены.</div>
 </div>
