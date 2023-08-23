@@ -7,6 +7,10 @@ The internet service for creating supplies advertisments. Users can create adver
 ```
 pip install -r requirements.txt
 ```
+- Apply the migrations of the project:
+```
+python3 manage.py migrate
+```
 - In folder with file manage.py execute a command:
 ```
 python3 manage.py runserver
