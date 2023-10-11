@@ -1,5 +1,5 @@
 # Market-place
-The internet service for creating supplies advertisments. Users can create advertisments, rate supplies and communicate with each other to sell and buy supplies.
+The social network for communicating with other users through posts, messages and comments to posts.
 
 # Launch project in the dev-mode
 - Create and activate virtual environment
@@ -11,7 +11,7 @@ pip install -r requirements.txt
 ```
 python3 manage.py migrate
 ```
-- In folder with file manage.py execute a command:
+- In folder with file main.py execute a command:
 ```
-python3 manage.py runserver
+python3 main.py
 ```
